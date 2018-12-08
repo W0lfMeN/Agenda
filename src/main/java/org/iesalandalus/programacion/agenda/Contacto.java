@@ -18,7 +18,22 @@ public class Contacto {
     private String nombre;
     private String telefono;
     private String correo;
-
+    
+    //Crea el constructor con los parámetros adecuados y que haga el mismo control que en el caso anterior
+    public Contacto(String nombre, String telefono, String correo) { //Para este caso basta con llamar al metodo set de cada variable
+        setNombre(nombre);
+        setCorreo(correo);
+        setTelefono(telefono);
+    }
+    
+    
+    /*Crea los métodos get y set. 
+    Ten en cuenta que el nombre no puede estar vacío
+    y que además no podemos modificar el nombre de un contacto ya creado,
+    el teléfono debe empezar por 6 o 9 y tener 9 dígitos en total y que el correo debe ser un correo válido.
+    Si no se cumple el método set correspondiente deberá lanzar una excepción
+    del tipo IllegalArgumentException con el mensaje adecuado.
+    Utiliza dos atributos de clase que no se puedan modificar para guardar las expresiones regulares a validar.*/
     public String getNombre() {
         return nombre;
     }
