@@ -25,7 +25,11 @@ public class Agenda {
             throw new IllegalArgumentException("Se ha introducido un numero no válido");
         }
     }
-    
+    /*Crea el método anadir para añadir un contacto a la agenda de forma que ésta se quede ordenada
+    por orden de inserción y sin que admita contactos repetidos.
+    Apóyate en los métodos privados buscarPrimerIndiceComprobandoExistencia e IndiceNoSuperaTamano.
+    El método debe informar de todos los posibles errores mediante la excepcion OperationNotSupportedException:
+    ya existe ese contacto, el array está lleno, etc*/
     public void aniadir (Contacto contacto) throws OperationNotSupportedException{ //lo cambio a aniadir para el test
         int indice=0;
         try{
@@ -62,6 +66,31 @@ public class Agenda {
         }else{
             return false;
         }
+    }
+    
+    //Crea el método buscar que recibirá el nombre del contacto y devolverá el contacto.
+    //creamos primero el metodo buscarIndiceCliente
+    private int buscarIndiceCliente(String cliente){
+        int indiceCliente=0;
+        Contacto contacto=null;
+        for (int i=0;i<contactos.length;i++){
+            if (contactos[i]!=null && contacto.getNombre().equals(contacto)){
+                return indiceCliente =i;
+            }
+        }
+      return indiceCliente;
+    }
+    //ahora el metodo buscar
+    public Contacto buscar(String contacto){
+        //se llama al metodo creado anteriormente
+        int indice=buscarIndiceCliente(contacto);
+        Contacto encontrado=null;
+        if(indice<contactos.length){
+            encontrado=contactos[indice];
+        }else{
+            return null;
+        }
+        return encontrado;
     }
     
     public int getNumContactos() {
