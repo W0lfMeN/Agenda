@@ -92,6 +92,26 @@ public class Agenda {
         }
         return encontrado;
     }
+    /*Crea el método borrar que borrará un contacto de la lista dejando la misma compactada
+    (los contactos válidos al principio y los nulos al final).
+    Apóyate en el método desplazarUnaPosicionHaciaIzquierda.
+    El método debe informar de los posibles errores mediante la excepcion OperationNotSupportedException*/
+    
+    //creamos el metodo borrar
+    public void borrar(String contacto)throws OperationNotSupportedException{
+        int i=buscarIndiceCliente(contacto);
+        if(i==-1){
+            throw new OperationNotSupportedException("El contacto a borrar no existe");
+        }else{
+            desplazarUnaPosicionHaciaIzquierda(i);
+        }
+    }
+    //Ahora el metodo desplazarUnaPosicionHaciaIzquierda
+    private void desplazarUnaPosicionHaciaIzquierda(int indice){
+        for (int i=indice; i<contactos.length-1 && contactos[i]!=null;i++){
+            contactos[i]=contactos[i+1];
+        }
+    }
     
     public int getNumContactos() {
         return numContactos;
