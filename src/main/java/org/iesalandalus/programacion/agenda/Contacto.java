@@ -13,14 +13,23 @@ import java.util.regex.Pattern;
  * @author Carlos
  */
 // 3. Crea la clase Contacto con sus atributos correspondientes
+
 public class Contacto {
-    private static final String PATRON_TELEFONO="[69][0-9]{8}"; //definimos el patron del telefono
-    private static final String PATRON_CORREO="^[a-zA-Z0-9]*+@+[a-zA-Z]*+.+[a-z]";
+    private static final String ER_TELEFONO="[69][0-9]{8}"; //definimos el patron del telefono
+    private static final String ER_CORREO="([a-zA-Z0-9]{1,}@)+[a-zA-Z]{1,}+.+[a-z]{2,3}"; //definimos el patron del correo
     private String nombre;
     private String telefono;
     private String correo;
+    private String iniciales;
     
     //Crea el constructor con los parámetros adecuados y que haga el mismo control que en el caso anterior
+
+    /**
+     *
+     * @param nombre
+     * @param telefono
+     * @param correo
+     */
     public Contacto(String nombre, String telefono, String correo) { //Para este caso basta con llamar al metodo set de cada variable
         setNombre(nombre);
         setCorreo(correo);
@@ -39,13 +48,27 @@ public class Contacto {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        if (this.nombre== null){
-            throw new IllegalArgumentException("El nombre de un contacto no puede ser nulo o vacío");
+    private void setNombre(String nombre) {
+        if(this.nombre !=null){
+            throw new IllegalArgumentException(" No se puede cambiar el nombre de un contacto que ya existe");
+        }else{
+        if (this.nombre ==null || nombre.equals("")){
+            throw new IllegalArgumentException("El nombre de un contacto no puede ser nulo o vacío.");
         }
         else{
             this.nombre = nombre;
         }
+       }
+    }
+
+    private String getIniciales() {
+        String []nombreCorto;
+        nombreCorto = nombre.split(" ");
+        for (int i=0;i<nombreCorto.length;i++){
+            String iniciales="";
+            iniciales=iniciales+nombreCorto[i].charAt(0);
+        }
+        return iniciales;
     }
 
     public String getTelefono() {
@@ -53,31 +76,33 @@ public class Contacto {
     }
 
     public void setTelefono(String telefono) {
-       if(telefono !=null){
-           if(Pattern.matches(PATRON_TELEFONO, telefono)){
+       if(telefono ==null || telefono.equals("")){
+          throw new IllegalArgumentException("El teléfono de un contacto no puede ser nulo o vacío.");
+        
+        }else{
+           if(Pattern.matches(ER_TELEFONO, telefono)){
                this.telefono=telefono;
            }else{
                throw new IllegalArgumentException("El teléfono de un contacto no puede ser nulo o vacío.");
-           }
-       }else{
-           throw new IllegalArgumentException("El teléfono no tiene un formato válido.");
-       }
- 
+            }
+        }
     }
+
 
     public String getCorreo() {
         return correo;
     }
 
     public void setCorreo(String correo) {
-        if(correo !=null){
-            if(Pattern.matches(PATRON_CORREO, correo)){
-                this.correo = correo;
+        if(correo ==null || correo.equals("")){
+           throw new IllegalArgumentException(" El correo de un contacto no puede ser nulo o vacío.");
             }else{
-                throw new IllegalArgumentException("El correo no tiene un formato válido.");
+                if(Pattern.matches(ER_CORREO, correo)){
+                this.correo = correo;
             }
-        }else{
-          throw new IllegalArgumentException("El correo no tiene un formato válido.");  
+            else{
+                throw new IllegalArgumentException(" El correo no tiene un formato válido.");  
+            }
         }
     }
     /*Crea los demás métodos que se muestran en el diagrama de clases,
@@ -85,12 +110,18 @@ public class Contacto {
     con las iniciales del nombre y encerrado entre corchetes el teléfono y el correo separados por comas.
     También debes tener en cuenta que un contacto será igual que otro si sus nombres,
     ignorando mayúsculas y minúsculas, son iguales*/
+
+    @Override
+    public String toString() {
+        return "Contacto{" + "nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + '}';
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.nombre);
-        hash = 29 * hash + Objects.hashCode(this.telefono);
-        hash = 29 * hash + Objects.hashCode(this.correo);
+        hash = 59 * hash + Objects.hashCode(this.nombre);
+        hash = 59 * hash + Objects.hashCode(this.telefono);
+        hash = 59 * hash + Objects.hashCode(this.correo);
         return hash;
     }
 
@@ -117,11 +148,4 @@ public class Contacto {
         }
         return true;
     }
-    
-    @Override
-    public String toString() {
-        return "Contacto{" + "nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + '}';
-    }
-    
-    
 }
