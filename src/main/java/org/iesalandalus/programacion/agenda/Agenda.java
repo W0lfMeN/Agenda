@@ -17,30 +17,30 @@ public class Agenda {
     private int numContactos=0;
     private Contacto [] contactos=null;
     
-    //crea el constructor y los metodos metodos get que se especifican
-    public Agenda (int numContactos){
-        if (numContactos>0){
-            this.numContactos=numContactos;
-        }else{
-            throw new IllegalArgumentException("Se ha introducido un numero no válido");
-        }
+    //crea el constructor y los metodos metodos get que se especifican (constructor por defecto)
+    public Agenda(){
+       this.contactos=new Contacto[MAX_CONTACTOS];
+       this.numContactos=0;
+       
     }
     /*Crea el método anadir para añadir un contacto a la agenda de forma que ésta se quede ordenada
     por orden de inserción y sin que admita contactos repetidos.
     Apóyate en los métodos privados buscarPrimerIndiceComprobandoExistencia e IndiceNoSuperaTamano.
     El método debe informar de todos los posibles errores mediante la excepcion OperationNotSupportedException:
     ya existe ese contacto, el array está lleno, etc*/
-    public void aniadir (Contacto contacto) throws OperationNotSupportedException{ //lo cambio a aniadir para el test
+    public void anadir (Contacto contacto) throws OperationNotSupportedException{ //lo cambio a aniadir para el test
         int indice=0;
         try{
             indice=buscarPrimerIndiceComprobadoExistencia(contacto);
-        }catch(OperationNotSupportedException e){
-            e.getMessage();
-            }
+        
         if (indiceNoSuperaTamano(indice)){
             contactos[indice]=contacto;
+            numContactos=+1;
         }else{
             throw new OperationNotSupportedException("El array esta lleno");
+            }
+        }catch(OperationNotSupportedException e){
+            e.getMessage();
         }
     }
     
@@ -74,7 +74,7 @@ public class Agenda {
         int indiceCliente=0;
         Contacto contacto=null;
         for (int i=0;i<contactos.length;i++){
-            if (contactos[i]!=null && contacto.getNombre().equals(contacto)){
+            if (contactos[i]!=null && contactos[i].getNombre().equals(cliente)){
                 return indiceCliente =i;
             }
         }
@@ -104,6 +104,7 @@ public class Agenda {
             throw new OperationNotSupportedException("El contacto a borrar no existe");
         }else{
             desplazarUnaPosicionHaciaIzquierda(i);
+            numContactos=-1;
         }
     }
     //Ahora el metodo desplazarUnaPosicionHaciaIzquierda
@@ -114,11 +115,18 @@ public class Agenda {
     }
     
     public int getNumContactos() {
+        numContactos=0;
+        for(int i=0;i<contactos.length-1;i++){
+            if(contactos[i]!=null){
+                numContactos++;
+            }
+        }
         return numContactos;
     }
 
     public Contacto [] getContacto() {
         return contactos;
     }
+
 }
 

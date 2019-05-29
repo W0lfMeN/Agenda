@@ -3,6 +3,8 @@ package org.iesalandalus.programacion.agenda.modelo;
 import static org.junit.Assert.*;
 
 import javax.naming.OperationNotSupportedException;
+import org.iesalandalus.programacion.agenda.Agenda;
+import org.iesalandalus.programacion.agenda.Contacto;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -10,7 +12,7 @@ import org.junit.Test;
 
 public class AgendaTest {
 	
-/*	private static final String MENSAJE_EXCEPCION = "Debería haber saltado la excepción.";
+	private static final String MENSAJE_EXCEPCION = "Debería haber saltado la excepción.";
 	private static final String MENSAJE_NO_EXCEPCION = "No debería haber saltado la excepción.";
 
 
@@ -30,56 +32,36 @@ public class AgendaTest {
 	}
 
 	@Test
-	public void anadirUnContactoTest() {
-		try {
-			agenda.anadir(contacto1);
-		} catch (OperationNotSupportedException e) {
-			fail(MENSAJE_NO_EXCEPCION);
-		}
+	public void anadirUnContactoTest() throws OperationNotSupportedException {
+            agenda.anadir(contacto1);
 		assertEquals(1, agenda.getNumContactos());
 	}
 	
 	@Test
-	public void anadirContactoRepetidoTest() {
-		try {
-			agenda.anadir(contacto1);
-			agenda.anadir(contacto1);
-			fail(MENSAJE_EXCEPCION);
-		} catch (OperationNotSupportedException e) {
-			assertEquals("Ya existe un contacto con ese nombre.", e.getMessage());
-		}
+	public void anadirContactoRepetidoTest() throws OperationNotSupportedException {
+            agenda.anadir(contacto1);
+            agenda.anadir(contacto1);
+            fail(MENSAJE_EXCEPCION);
 		assertEquals(1, agenda.getNumContactos());
 	}
 	
 	@Test
-	public void anadirDosContactosTest() {
-		try {
-			agenda.anadir(contacto1);
-			agenda.anadir(contacto2);
-		} catch (OperationNotSupportedException e) {
-			fail(MENSAJE_NO_EXCEPCION);
-		}
+	public void anadirDosContactosTest() throws OperationNotSupportedException {
+            agenda.anadir(contacto1);
+            agenda.anadir(contacto2);
 		assertEquals(2, agenda.getNumContactos());
 	}
 	
 	@Test
-	public void buscarContactoExistenteTest() {
-		try {
-			agenda.anadir(contacto1);
-		} catch (OperationNotSupportedException e) {
-			fail(MENSAJE_NO_EXCEPCION);
-		}
+	public void buscarContactoExistenteTest() throws OperationNotSupportedException {
+            agenda.anadir(contacto1);
 		Contacto contacto = agenda.buscar(contacto1.getNombre());
 		assertEquals("Contacto1", contacto.getNombre());
 	}
 	
 	@Test
-	public void buscarContactoNoExistenteTest() {
-		try {
-			agenda.anadir(contacto1);
-		} catch (OperationNotSupportedException e) {
-			fail(MENSAJE_NO_EXCEPCION);
-		}
+	public void buscarContactoNoExistenteTest() throws OperationNotSupportedException {
+            agenda.anadir(contacto1);
 		Contacto contacto = agenda.buscar(contacto2.getNombre());
 		assertNull(contacto);
 	}
@@ -147,5 +129,5 @@ public class AgendaTest {
 		assertNull(agenda.buscar(contacto3.getNombre()));
 		assertEquals(2, agenda.getNumContactos());
 	}
-*/
+
 }

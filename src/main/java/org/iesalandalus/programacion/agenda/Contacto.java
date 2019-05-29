@@ -16,11 +16,10 @@ import java.util.regex.Pattern;
 
 public class Contacto {
     private static final String ER_TELEFONO="[69][0-9]{8}"; //definimos el patron del telefono
-    private static final String ER_CORREO="([a-zA-Z0-9]{1,}@)+[a-zA-Z]{1,}+.+[a-z]{2,3}"; //definimos el patron del correo
+    private static final String ER_CORREO="^[a-z0-9]+(\\.[a-z0-9]+)*@[a-z]+(\\.[a-z]+)*(\\.[a-z]{1,4})$"; //definimos el patron del correo
     private String nombre;
     private String telefono;
     private String correo;
-    private String iniciales;
     
     //Crea el constructor con los parámetros adecuados y que haga el mismo control que en el caso anterior
 
@@ -49,23 +48,21 @@ public class Contacto {
     }
 
     private void setNombre(String nombre) {
-        if(this.nombre !=null){
-            throw new IllegalArgumentException(" No se puede cambiar el nombre de un contacto que ya existe");
-        }else{
-        if (this.nombre ==null || nombre.equals("")){
+        
+        if (nombre ==null || nombre.equals("")){
             throw new IllegalArgumentException("El nombre de un contacto no puede ser nulo o vacío.");
         }
         else{
             this.nombre = nombre;
         }
-       }
     }
 
     private String getIniciales() {
         String []nombreCorto;
+        String iniciales="";
         nombreCorto = nombre.split(" ");
         for (int i=0;i<nombreCorto.length;i++){
-            String iniciales="";
+            
             iniciales=iniciales+nombreCorto[i].charAt(0);
         }
         return iniciales;
@@ -83,7 +80,7 @@ public class Contacto {
            if(Pattern.matches(ER_TELEFONO, telefono)){
                this.telefono=telefono;
            }else{
-               throw new IllegalArgumentException("El teléfono de un contacto no puede ser nulo o vacío.");
+               throw new IllegalArgumentException("El teléfono no tiene un formato válido.");
             }
         }
     }
@@ -95,13 +92,13 @@ public class Contacto {
 
     public void setCorreo(String correo) {
         if(correo ==null || correo.equals("")){
-           throw new IllegalArgumentException(" El correo de un contacto no puede ser nulo o vacío.");
+           throw new IllegalArgumentException("El correo de un contacto no puede ser nulo o vacío.");
             }else{
                 if(Pattern.matches(ER_CORREO, correo)){
                 this.correo = correo;
             }
             else{
-                throw new IllegalArgumentException(" El correo no tiene un formato válido.");  
+                throw new IllegalArgumentException("El correo no tiene un formato válido.");  
             }
         }
     }
@@ -113,7 +110,7 @@ public class Contacto {
 
     @Override
     public String toString() {
-        return "Contacto{" + "nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + '}';
+        return  getIniciales()+ " [" + telefono +"," + correo +"]";
     }
 
     @Override
@@ -137,15 +134,11 @@ public class Contacto {
             return false;
         }
         final Contacto other = (Contacto) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.telefono, other.telefono)) {
-            return false;
-        }
-        if (!Objects.equals(this.correo, other.correo)) {
+        if (!Objects.equals(this.nombre.toUpperCase(), other.nombre.toUpperCase())) {
             return false;
         }
         return true;
     }
+
+    
 }
