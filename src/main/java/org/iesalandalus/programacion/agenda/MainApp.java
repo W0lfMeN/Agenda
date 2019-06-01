@@ -105,7 +105,7 @@ public class MainApp {
                 String nombre;
                 System.out.println("Introduce el contacto a borrar");
                 nombre=Entrada.cadena();
-                Contacto[]contactos=agenda.getContacto();
+                Contacto[]contactos=agenda.getContactos();
                 boolean encontrado=false;
                 try{
                     agenda.borrar(nombre);
@@ -123,9 +123,9 @@ public class MainApp {
             
             //creamos el metodo listarAgenda
             private static void listarAgenda()throws OperationNotSupportedException{
-                Contacto[]contactos=agenda.getContacto();
+                Contacto[]contactos=agenda.getContactos();
                 for(int i=0;i<agenda.getNumContactos();i++);{
-                    System.out.println(agenda.getContacto());
+                    System.out.println(agenda.getContactos());
                 }
                 ejecutarOpcion(elegirOpcion());
             }

@@ -29,7 +29,19 @@ public class Agenda {
     El método debe informar de todos los posibles errores mediante la excepcion OperationNotSupportedException:
     ya existe ese contacto, el array está lleno, etc*/
     public void anadir (Contacto contacto) throws OperationNotSupportedException{ //lo cambio a aniadir para el test
-        int indice=0;
+        if(contacto==null){
+            throw new IllegalArgumentException("No se puede añadir un contacto nulo");
+        }
+        int indice=buscarPrimerIndiceComprobadoExistencia(contacto);
+        
+        if(indiceNoSuperaTamano(indice)){
+            throw new OperationNotSupportedException("El contacto ya existe");
+        }else{
+            contactos[indice]=contacto;
+            
+        }
+        
+        /*int indice=0;
         try{
             indice=buscarPrimerIndiceComprobadoExistencia(contacto);
         
@@ -40,20 +52,20 @@ public class Agenda {
             throw new OperationNotSupportedException("El array esta lleno");
             }
         }catch(OperationNotSupportedException e){
-            e.getMessage();
-        }
+            System.out.println(e.getMessage());
+        }*/
     }
     
     private int buscarPrimerIndiceComprobadoExistencia (Contacto contacto)throws OperationNotSupportedException {
-        int indice=0;
+        int indice=-1;
         boolean encontrado=false;
         for(int i=0;i<contactos.length && !encontrado;i++){
             if(contactos[i]==null){
                 encontrado=true;
                 indice=i;
             }else{
-                if(contactos[i].equals(contacto)){
-                    throw new OperationNotSupportedException("Ya existe ese contacto");
+                if(contactos[i].getNombre().equals(contacto)){
+                    throw new OperationNotSupportedException("Ya existe ese contacto.");
                 }
             }
         }
@@ -71,14 +83,12 @@ public class Agenda {
     //Crea el método buscar que recibirá el nombre del contacto y devolverá el contacto.
     //creamos primero el metodo buscarIndiceCliente
     private int buscarIndiceCliente(String cliente){
-        int indiceCliente=0;
-        Contacto contacto=null;
         for (int i=0;i<contactos.length;i++){
             if (contactos[i]!=null && contactos[i].getNombre().equals(cliente)){
-                return indiceCliente =i;
+                return i;
             }
         }
-      return indiceCliente;
+      return MAX_CONTACTOS;
     }
     //ahora el metodo buscar
     public Contacto buscar(String contacto){
@@ -101,10 +111,10 @@ public class Agenda {
     public void borrar(String contacto)throws OperationNotSupportedException{
         int i=buscarIndiceCliente(contacto);
         if(i==-1){
-            throw new OperationNotSupportedException("El contacto a borrar no existe");
+            throw new OperationNotSupportedException("El contacto a borrar no existe.");
         }else{
             desplazarUnaPosicionHaciaIzquierda(i);
-            numContactos=-1;
+            numContactos--;
         }
     }
     //Ahora el metodo desplazarUnaPosicionHaciaIzquierda
@@ -124,8 +134,8 @@ public class Agenda {
         return numContactos;
     }
 
-    public Contacto [] getContacto() {
-        return contactos;
+    public Contacto [] getContactos() {
+        return contactos.clone();
     }
 
 }
