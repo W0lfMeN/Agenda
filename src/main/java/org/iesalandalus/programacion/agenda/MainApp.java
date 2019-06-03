@@ -79,10 +79,9 @@ public class MainApp {
                 try{
                     Contacto contacto1=new Contacto(nombre,telefono,correo);
                     agenda.anadir(contacto1);
-                    System.out.println(contacto1.toString());
                     System.out.println(EXITO);
                 }catch(IllegalArgumentException e){
-                    System.out.println("Operacion no soportada"+e.getMessage());
+                    System.out.println("Operacion no soportada: "+e.getMessage());
                 }
                 ejecutarOpcion(elegirOpcion());
             }
@@ -95,7 +94,7 @@ public class MainApp {
                 try{
                     agenda.buscar(nombre);
                  
-                }catch (IllegalArgumentException e){
+                }catch (NullPointerException e){
                     System.out.println("El contacto a buscar no existe");
                 }
                 ejecutarOpcion(elegirOpcion());
@@ -105,18 +104,16 @@ public class MainApp {
                 String nombre;
                 System.out.println("Introduce el contacto a borrar");
                 nombre=Entrada.cadena();
-                Contacto[]contactos=agenda.getContactos();
                 boolean encontrado=false;
                 try{
                     agenda.borrar(nombre);
+                    encontrado=true;
                     
                 }catch(OperationNotSupportedException e){
                     e.getMessage();
                 }
                 if(encontrado==true){
                     System.out.println(EXITO);
-                }else{
-                    System.out.println(ERROR);
                 }
                 ejecutarOpcion(elegirOpcion());
             }
