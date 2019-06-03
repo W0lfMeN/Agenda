@@ -40,20 +40,6 @@ public class Agenda {
             contactos[indice]=contacto;
             
         }
-        
-        /*int indice=0;
-        try{
-            indice=buscarPrimerIndiceComprobadoExistencia(contacto);
-        
-        if (indiceNoSuperaTamano(indice)){
-            contactos[indice]=contacto;
-            numContactos=+1;
-        }else{
-            throw new OperationNotSupportedException("El array esta lleno");
-            }
-        }catch(OperationNotSupportedException e){
-            System.out.println(e.getMessage());
-        }*/
     }
     
     private int buscarPrimerIndiceComprobadoExistencia (Contacto contacto)throws OperationNotSupportedException {
@@ -63,10 +49,6 @@ public class Agenda {
             if(contactos[i]==null){
                 encontrado=true;
                 indice=i;
-            }else{
-                if(contactos[i].getNombre().equals(contacto)){
-                    throw new OperationNotSupportedException("Ya existe ese contacto.");
-                }
             }
         }
         return indice;

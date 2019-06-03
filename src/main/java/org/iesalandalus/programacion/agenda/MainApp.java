@@ -96,7 +96,7 @@ public class MainApp {
                     agenda.buscar(nombre);
                  
                 }catch (IllegalArgumentException e){
-                    System.out.println("Operacion no soportada"+e.getMessage());
+                    System.out.println("El contacto a buscar no existe");
                 }
                 ejecutarOpcion(elegirOpcion());
             }
@@ -123,9 +123,13 @@ public class MainApp {
             
             //creamos el metodo listarAgenda
             private static void listarAgenda()throws OperationNotSupportedException{
+                try{
                 Contacto[]contactos=agenda.getContactos();
-                for(int i=0;i<agenda.getNumContactos();i++);{
-                    System.out.println(agenda.getContactos());
+                for(int i=0;i<contactos.length;i++){
+                    System.out.println(i);
+                }
+                }catch(NullPointerException e) {
+                    System.out.println("La agenda está vacía");
                 }
                 ejecutarOpcion(elegirOpcion());
             }
